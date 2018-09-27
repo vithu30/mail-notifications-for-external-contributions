@@ -36,7 +36,6 @@ public function send(string to,string subject, string accessToken, string messag
     }
     string concatMessage = "";
     string from = config:getGlobalValue("GMAIL_FROM");
-    //string from = "github-open-pr-analyzer@wso2.com";
     string cc = "engineering-group@wso2.com,rohan@wso2.com,shankar@wso2.com";
     http:OutRequest httpRequest = {};
     http:InResponse httpResponse = {};
@@ -74,167 +73,166 @@ public function generateMailBody() {
     var pullRequests = readPRData();
     var issues = readIssueData();
     
-    //string message;
-    //string to;
-    //int iterator;
-    //int pullRequestCount;
-    //int issuesCount;
-    //int index;
-    //string pullRequestMessage;
-    //string issueMessage;
-    //string accessToken = refreshAccessToken();
-    //to = "vithursa@wso2.com";
-    //
-    //string header = "<head>
-    //                <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />
-    //                    <style>
-    //                        table {
-    //                            font-family: arial, sans-serif;
-    //                            border-collapse: collapse;
-    //                            width: 75%;
-    //                            text-align: center;
-    //                        }
-    //                        td, th {
-    //                            border: 1.5px solid #17202a;
-    //                            text-align: left;
-    //                            padding: 8px;
-    //                        }
-    //                    </style>
-    //                </head>";
-    //
-    //string prTableHeader = "<table
-    //                                cellspacing=\"1\"
-    //                                cellpadding=\"1\"
-    //                                border=\"1\"
-    //                                bgcolor=\"#F2F2F2\" >
-    //                                <tr bgcolor=\"#b4d0e8\">
-    //                                    <th>Repository Name</th>
-    //                                    <th>URL</th>
-    //                                    <th>Github Id</th>
-    //                                    <th>Open Days</th>
-    //                                    <th>Open Weeks</th>
-    //                                    <th>State</th>
-    //                                </tr>";
-    //
-    //string issueTableHeader = "<table
-    //                                cellspacing=\"1\"
-    //                                cellpadding=\"1\"
-    //                                border=\"1\"
-    //                                bgcolor=\"#F2F2F2\" >
-    //                                <tr bgcolor=\"#b4d0e8\">
-    //                                    <th>Repository Name</th>
-    //                                    <th>URL</th>
-    //                                    <th>Github Id</th>
-    //                                    <th>Open Days</th>
-    //                                    <th>Open Weeks</th>
-    //                                </tr>";
-    //
-    //    pullRequestCount = 0;
-    //    issuesCount = 0;
-    //    pullRequestMessage = "";
-    //    issueMessage = "";
-    //
-    //    // Generate body of table for pull requests
-    //
-    //    while(iterator < lengthof pullRequests){
-    //            pullRequestCount = pullRequestCount + 1;
-    //            pullRequestMessage = pullRequestMessage +
-    //                                 "<tr>
-    //                <td style=\"font-size:12px;\">" + pullRequests[iterator].RepositoryName + "</td>
-    //                <td style=\"font-size:12px;\">" + pullRequests[iterator].Url+ "</td>
-    //                <td style=\"font-size:12px;\">" + pullRequests[iterator].GithubId + "</td>
-    //                <td style=\"font-size:12px;\">" + pullRequests[iterator].Days+ "</td>
-    //                <td style=\"font-size:12px;\">" + pullRequests[iterator].Weeks + "</td>
-    //                <td style=\"font-size:12px;\">" + pullRequests[iterator].State+ "</td>
-    //            </tr>";
-    //
-    //        iterator = iterator + 1;
-    //    }
-    //    iterator = 0;
-    //
-    //    // Generate body of table for issues
-    //    while(iterator < lengthof issues){
-    //            issuesCount = issuesCount + 1;
-    //            issueMessage = issueMessage +
-    //                           "<tr>
-    //                <td style=\"font-size:12px;\">" + issues[iterator].RepositoryName + "</td>
-    //                <td style=\"font-size:12px;\">" + issues[iterator].Url + "</td>
-    //                <td style=\"font-size:12px;\">" + issues[iterator].GithubId + "</td>
-    //                <td style=\"font-size:12px;\">" + issues[iterator].Days + "</td>
-    //                <td style=\"font-size:12px;\">" + issues[iterator].Weeks + "</td>
-    //                </tr>";
-    //        iterator = iterator + 1;
-    //    }
-    //    iterator = 0;
-    //
-    //    // Send mail with tables considering whether issues / pull requests
-    //    // exists or not
-    //
-    //    if(pullRequestCount > 0 || issuesCount > 0){
-    //        if(checkAccessToken(accessToken)){
-    //            accessToken = refreshAccessToken();
-    //        }
-    //        if(pullRequestCount > 0 && issuesCount > 0){
-    //            message = "<html>" +
-    //                      header +
-    //                      "<h2>
-    //                          \n Pull Requests from non WSO2 committers \n
-    //                      </h2>
-    //                      <body style=\"margin:0; padding:0;\">" +
-    //                      prTableHeader +
-    //                      pullRequestMessage +
-    //                      "</table>
-    //                      <h2>
-    //                        \n Issues from non WSO2 committers \n
-    //                      </h2>" +
-    //                      issueTableHeader +
-    //                      issueMessage +"
-    //                      </table>
-    //                      </body>
-    //                      </html>";
-    //        }
-    //        else{
-    //            if(pullRequestCount > 0){
-    //                message = "<html>" +
-    //                          header +
-    //                          "<h2>
-    //                              \n Pull Requests from non WSO2 committers \n
-    //                          </h2>
-    //                          <body style=\"margin:0; padding:0;\">" +
-    //                          prTableHeader +
-    //                          pullRequestMessage +"
-    //                          </body>
-    //                          </html>";
-    //            }
-    //            else{
-    //                message = "<html>"+
-    //                          header +
-    //                          "<h2>
-    //                              \n Issues from non WSO2 committers \n
-    //                          </h2>
-    //                          <body style=\"margin:0; padding:0;\">" +
-    //                          issueTableHeader +
-    //                          issueMessage +"
-    //                          </body>
-    //                          </html>";
-    //            }
-    //        }
-    //        //to =  mailingList[index] != "" ? mailingList[index] : "engineering-group@wso2.com";
-    //        try{
-    //            int status = send(to,"Open PRs and issues from non WSO2 committers : Ballerina" ,accessToken,message);
-    //            if(status ==200){
-    //                log:printInfo("Mail sent to " + to + " and cc to ");
-    //            }else{
-    //                log:printError("Error in sending mail " + status);
-    //            }
-    //
-    //        }
-    //        catch (error err) {
-    //            log:printError("Unable to send mail : " + err.message);
-    //        }
-    //
-    //    }
-    //    index = index + 1;
+    string message;
+    string to;
+    int iterator;
+    int pullRequestCount;
+    int issuesCount;
+    int index;
+    string pullRequestMessage;
+    string issueMessage;
+    string accessToken = refreshAccessToken();
+    
+    
+    string header = "<head>
+                    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />
+                        <style>
+                            table {
+                                font-family: arial, sans-serif;
+                                border-collapse: collapse;
+                                width: 75%;
+                                text-align: center;
+                            }
+                            td, th {
+                                border: 1.5px solid #17202a;
+                                text-align: left;
+                                padding: 8px;
+                            }
+                        </style>
+                    </head>";
+    
+    string prTableHeader = "<table
+                                    cellspacing=\"1\"
+                                    cellpadding=\"1\"
+                                    border=\"1\"
+                                    bgcolor=\"#F2F2F2\" >
+                                    <tr bgcolor=\"#b4d0e8\">
+                                        <th>Repository Name</th>
+                                        <th>URL</th>
+                                        <th>Github Id</th>
+                                        <th>Open Days</th>
+                                       <th>Open Weeks</th>
+                                        <th>State</th>
+                                    </tr>";
+    string issueTableHeader = "<table
+                                    cellspacing=\"1\"
+                                    cellpadding=\"1\"
+                                    border=\"1\"
+                                    bgcolor=\"#F2F2F2\" >
+                                    <tr bgcolor=\"#b4d0e8\">
+                                        <th>Repository Name</th>
+                                        <th>URL</th>
+                                        <th>Github Id</th>
+                                        <th>Open Days</th>
+                                        <th>Open Weeks</th>
+                                    </tr>";
+    
+        pullRequestCount = 0;
+        issuesCount = 0;
+        pullRequestMessage = "";
+        issueMessage = "";
+    
+        // Generate body of table for pull requests
+    
+        while(iterator < lengthof pullRequests){
+                pullRequestCount = pullRequestCount + 1;
+                pullRequestMessage = pullRequestMessage +
+                                     "<tr>
+                    <td style=\"font-size:12px;\">" + pullRequests[iterator].RepositoryName + "</td>
+                    <td style=\"font-size:12px;\">" + pullRequests[iterator].Url+ "</td>
+                    <td style=\"font-size:12px;\">" + pullRequests[iterator].GithubId + "</td>
+                    <td style=\"font-size:12px;\">" + pullRequests[iterator].Days+ "</td>
+                    <td style=\"font-size:12px;\">" + pullRequests[iterator].Weeks + "</td>
+                    <td style=\"font-size:12px;\">" + pullRequests[iterator].State+ "</td>
+                </tr>";
+    
+            iterator = iterator + 1;
+        }
+        iterator = 0;
+    
+        // Generate body of table for issues
+        while(iterator < lengthof issues){
+                issuesCount = issuesCount + 1;
+                issueMessage = issueMessage +
+                               "<tr>
+                    <td style=\"font-size:12px;\">" + issues[iterator].RepositoryName + "</td>
+                    <td style=\"font-size:12px;\">" + issues[iterator].Url + "</td>
+                    <td style=\"font-size:12px;\">" + issues[iterator].GithubId + "</td>
+                    <td style=\"font-size:12px;\">" + issues[iterator].Days + "</td>
+                    <td style=\"font-size:12px;\">" + issues[iterator].Weeks + "</td>
+                    </tr>";
+            iterator = iterator + 1;
+        }
+        iterator = 0;
+    
+        // Send mail with tables considering whether issues / pull requests
+        // exists or not
+    
+        if(pullRequestCount > 0 || issuesCount > 0){
+            if(checkAccessToken(accessToken)){
+                accessToken = refreshAccessToken();
+            }
+            if(pullRequestCount > 0 && issuesCount > 0){
+                message = "<html>" +
+                          header +
+                          "<h2>
+                              \n Pull Requests from non WSO2 committers \n
+                          </h2>
+                          <body style=\"margin:0; padding:0;\">" +
+                          prTableHeader +
+                          pullRequestMessage +
+                          "</table>
+                          <h2>
+                            \n Issues from non WSO2 committers \n
+                          </h2>" +
+                          issueTableHeader +
+                          issueMessage +"
+                          </table>
+                          </body>
+                          </html>";
+            }
+            else{
+                if(pullRequestCount > 0){
+                    message = "<html>" +
+                              header +
+                              "<h2>
+                                  \n Pull Requests from non WSO2 committers \n
+                              </h2>
+                              <body style=\"margin:0; padding:0;\">" +
+                              prTableHeader +
+                              pullRequestMessage +"
+                              </body>
+                              </html>";
+                }
+                else{
+                    message = "<html>"+
+                              header +
+                              "<h2>
+                                  \n Issues from non WSO2 committers \n
+                              </h2>
+                              <body style=\"margin:0; padding:0;\">" +
+                              issueTableHeader +
+                              issueMessage +"
+                              </body>
+                              </html>";
+                }
+           }
+    to =  mailingList[index] != "" ? mailingList[index] : "engineering-group@wso2.com";
+            try{
+                int status = send(to,"Open PRs and issues from non WSO2 committers : Ballerina" ,accessToken,message);
+                if(status ==200){
+                    log:printInfo("Mail sent to " + to + " and cc to ");
+                }else{
+                    log:printError("Error in sending mail " + status);
+                }
+    
+            }
+            catch (error err) {
+                log:printError("Unable to send mail : " + err.message);
+            }
+    
+        }
+        index = index + 1;
 }
 
 @Description { value:"check whether the access token is expired or not"}
@@ -279,9 +277,6 @@ public function refreshAccessToken () (string) {
     string refreshToken = config:getGlobalValue("GMAIL_REFRESH_TOKEN");
     string clientId = config:getGlobalValue("GMAIL_CLIENT_ID");
     string clientSecret = config:getGlobalValue("GMAIL_CLIENT_SECRET");
-    //string refreshToken = "1/AjQW_fYCrAvsoWr2v5bHYC0BPUumuWYMUYmqmS7boJ0";
-    //string clientSecret = "6A1f6P3IXcilu9TVgsZX22A4";
-    //string clientId = "453012534900-mdp60q45n0q976ocbe2suqnlsvk2g0rb.apps.googleusercontent.com";
     string request = "grant_type=refresh_token" + "&client_id=" + clientId +
                      "&client_secret=" + clientSecret +"&refresh_token=" + refreshToken;
     http:OutRequest httpRequest = {};

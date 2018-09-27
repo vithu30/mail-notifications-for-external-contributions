@@ -34,14 +34,14 @@ public function send(string to,string subject, string accessToken, string messag
     }
     string concatMessage = "";
     string from = "github-open-pr-analyzer@wso2.com";
-    //string cc = "engineering-group@wso2.com,rohan@wso2.com,shankar@wso2.com";
+    string cc = "engineering-group@wso2.com,rohan@wso2.com,shankar@wso2.com";
     http:OutRequest httpRequest = {};
     http:InResponse httpResponse = {};
     
     concatMessage = concatMessage + "to:" + to + "\n" +
                     "subject:" + subject + "\n" +
                     "from:" + from + "\n" +
-                    //"cc:" + cc + "\n" +
+                    "cc:" + cc + "\n" +
                     "Content-Type:" + CONTENT_TYPE + "\n" +
                     "\n" + message + "\n";
     
@@ -71,14 +71,14 @@ public function generateMailBody() {
     issueData [] issues = readIssueData();
     
     string [] productList = [];
-    //string [] mailingList = [];
+    string [] mailingList = [];
     
     productList = ["API Management","Automation","Ballerina","Cloud","Financial Solutions",
                    "IAM","Integration","IoT","Platform","Platform Extension",
                    "Analytics","Unknown","No build defined","Other"];
-    //mailingList = ["apim-group@wso2.com","","ballerina-group@wso2.com","cloud-group@wso2.com","",
-    //"iam-group@wso2.com","integration-group@wso2.com","iot-group@wso2.com","platform-group@wso2.com",
-    //"","analytics-group@wso2.com","","",""];
+    mailingList = ["apim-group@wso2.com","","ballerina-group@wso2.com","cloud-group@wso2.com","",
+    "iam-group@wso2.com","integration-group@wso2.com","iot-group@wso2.com","platform-group@wso2.com",
+    "","analytics-group@wso2.com","","",""];
     
     string message;
     string to;
@@ -90,7 +90,6 @@ public function generateMailBody() {
     string issueMessage;
     string product;
     string accessToken = refreshAccessToken();
-    to = "vithursa@wso2.com";
     
     string header = "<head>
                     <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />
@@ -239,7 +238,7 @@ public function generateMailBody() {
                               </html>";
                 }
             }
-            //to =  mailingList[index] != "" ? mailingList[index] : "engineering-group@wso2.com";
+            to =  mailingList[index] != "" ? mailingList[index] : "engineering-group@wso2.com";
             try{
                 send(to,"Open PRs and issues from non WSO2 committers : " + str,accessToken,message);
                 log:printInfo("Mail sent to " + to + " and cc to ");

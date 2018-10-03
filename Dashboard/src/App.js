@@ -1,0 +1,76 @@
+// Copyright (c) 2018 WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+//
+// WSO2 Inc. licenses this file to you under the Apache License,
+// Version 2.0 (the "License"); you may not use this file except
+// in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing,
+// software distributed under the License is distributed on an
+// "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+// KIND, either express or implied. See the License for the
+// specific language governing permissions and limitations
+// under the License.
+
+import React  from 'react';
+import logo from './wso2.svg';
+import PullRequests from "./PullRequestFetch";
+import Issues from "./IssueFetch";
+import {Tabs,Tab} from "react-bootstrap-tabs";
+import {Well, PageHeader} from 'react-bootstrap';
+import './App.css';
+import './react-taco-table.css';
+import './bootstrap.min.css';
+import './style.css';
+import './bootstrap-theme.min.css';
+
+class App extends React.Component {
+    render() {
+        return (
+            <div>
+                <Header/>
+                <Tabs defaultActiveKey = {1} animation = {false} id = "noanim-tab-example">
+                    <Tab eventKey = {1} title = "pullRequests" label = "Pull Requests"
+                         headerStyle = {{fontWeight: 'bold'}} activeHeaderStyle = {{color: 'orange'}}>
+                        <Well>
+                            <div className = 'formatPanel'>
+                                Pull requests from external contributors
+                            </div>
+                        </Well>
+                        <PullRequests/>
+                    </Tab>
+                    <Tab eventKey = {2} title = "issues" label = "Issues"
+                         headerStyle = {{fontWeight: 'bold'}} activeHeaderStyle = {{color: 'orange'}}>
+                        <Well>
+                            <div className = 'formatPanel'>
+                                Issues from external contributors
+                            </div>
+                        </Well>
+                        <Issues/>
+                    </Tab>
+                </Tabs>
+            </div>
+        );
+    }
+}
+
+class Header extends React.Component {
+    render() {
+        return (
+            <div className = "App">
+                <header className = "App-header">
+                    <PageHeader>
+            <h1 className="App-title"><img src={logo} className="App-logo" alt="logo" /> &#160;   &#160;
+                <small>
+                    Pull requests and issues from external committers
+                </small>
+        </h1>
+                    </PageHeader>;
+                </header>
+            </div>
+        );
+    }
+}
+export default App;
